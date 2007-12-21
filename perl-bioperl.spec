@@ -1,7 +1,7 @@
 %define module	bioperl
 %define name	perl-%{module}
-%define version 1.5.1
-%define release %mkrel 5
+%define version 1.5.2_102
+%define release %mkrel 1
 
 %define _requires_exceptions perl(Bio::Expression::FeatureSet)\\|perl(TestInterface)
 %define _provides_exceptions perl(Error)\\|perl(Error::Simple)\\|perl(Error::subs)\\|perl(TestInterface)\\|perl(TestObject)
@@ -21,7 +21,10 @@ BuildRequires:	perl-devel
 %endif
 BuildRequires:	perl(Clone)
 BuildRequires:	perl(Class::AutoClass)
+BuildRequires:	perl(CPAN)
+BuildRequires:  perl(Data::Stag::Writer)
 BuildRequires:	perl(GD)
+#BuildRequires:	perl(GD::SVG)
 BuildRequires:	perl(IO::String)
 BuildRequires:	perl(SVG::Graph)
 BuildRequires:	perl(Text::Shellwords)
@@ -29,7 +32,8 @@ BuildRequires:	perl(Tree::DAG_Node)
 BuildRequires:	perl(XML::DOM::XPath)
 BuildRequires:	perl(XML::SAX::Writer)
 BuildRequires:  perl(XML::Twig)
-BuildRequires:  perl(Data::Stag::Writer)
+BuildRequires:	perl(XML::Writer)
+
 Obsoletes:	perl-Bioperl
 Provides:	perl-Bioperl
 BuildArch:	noarch
@@ -43,17 +47,18 @@ research.
 
 %prep
 %setup -q -n %{module}-%{version}
-%patch
-rm -f t/FeatureIO.t
-rm -f t/SeqFeatCollection.t
-rm -f t/DB.t
+#%patch
+#rm -f t/FeatureIO.t
+#rm -f t/SeqFeatCollection.t
+#rm -f t/DB.t
 
 %build
-%{__perl} Makefile.PL INSTALLDIRS=vendor </dev/null
+#%{__perl} -I/usr/lib/perl5/vendor_perl/5.8.8/ Makefile.PL INSTALLDIRS=vendor  </dev/null
+%{__perl} Makefile.PL INSTALLDIRS=vendor  </dev/null
 %make
 
 %check
-#%make test
+%make test
 
 %install
 %{__rm} -rf %{buildroot}
@@ -62,10 +67,13 @@ rm -f t/DB.t
 %{__rm} -f %{buildroot}%{_bindir}/bp_pairwise_kaks.pl
 %{__rm} -f %{buildroot}%{_bindir}/bp_blast2tree.pl
 
+# correct permissions
+find %{buildroot}%{perl_vendorlib}/Bio/ -name "*.pm" -exec chmod 644 {} \;
+
 # clean doc
 executables='.*\(\.\(pl\|cgi\)\|pdf2index\|dbfetch\)$'
 for dir in examples doc; do
-    find $dir -type f -regex $executables | xargs chmod 755
+    find $dir -type f -regex $executables | xargs chmod 644
     find $dir -type f -regex $executables | xargs perl -pi -e 's|^#!/usr/local/bin/perl|#!/usr/bin/perl|'
     find $dir -type f ! -regex $executables | xargs chmod 644
     find $dir -type f | xargs perl -pi -e 'BEGIN {exit unless -T $ARGV[0];} tr/\r//d;'
@@ -76,12 +84,12 @@ done
 
 %files
 %defattr(-,root,root)
-%doc doc examples models
-%doc AUTHORS BUGS Changes DEPRECATED FAQ INSTALL LICENSE PLATFORMS README
+%doc examples models
+%doc AUTHORS BUGS Changes DEPENDENCIES DEPRECATED INSTALL LICENSE PLATFORMS README
 %{_bindir}/*
-%{perl_vendorlib}/Bio
-%{perl_vendorlib}/*.pl
-%{perl_vendorlib}/*.pod
+%{perl_vendorlib}/Bio/
+#%{perl_vendorlib}/*.pl
+#%{perl_vendorlib}/*.pod
 %{_mandir}/*/*
 
 
