@@ -33,6 +33,7 @@ BuildRequires:  perl(Data::Stag::Writer)
 Obsoletes:	perl-Bioperl
 Provides:	perl-Bioperl
 BuildArch:	noarch
+BuildRoot:	%{_tmppath}/%{name}-%{version}
 
 %description
 Officially organized in 1995 and existing informally for several years
