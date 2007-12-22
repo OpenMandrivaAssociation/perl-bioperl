@@ -1,7 +1,7 @@
 %define module	bioperl
 %define name	perl-%{module}
 %define version 1.5.2_102
-%define release %mkrel 1
+%define release %mkrel 2
 
 %define _requires_exceptions perl(Bio::Expression::FeatureSet)\\|perl(TestInterface)
 %define _provides_exceptions perl(Error)\\|perl(Error::Simple)\\|perl(Error::subs)\\|perl(TestInterface)\\|perl(TestObject)
@@ -21,7 +21,7 @@ BuildRequires:	perl-devel
 %endif
 BuildRequires:	perl(Clone)
 BuildRequires:	perl(Class::AutoClass)
-BuildRequires:	perl(CPAN)
+BuildRequires:	perl(CPAN) >= 1.9205
 BuildRequires:  perl(Data::Stag::Writer)
 BuildRequires:	perl(GD)
 #BuildRequires:	perl(GD::SVG)
