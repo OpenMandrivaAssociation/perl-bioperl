@@ -1,7 +1,7 @@
 %define module	bioperl
 %define name	perl-%{module}
 %define version 1.5.2_102
-%define release %mkrel 2
+%define release %mkrel 3
 
 %define _requires_exceptions perl(Bio::Expression::FeatureSet)\\|perl(TestInterface)
 %define _provides_exceptions perl(Error)\\|perl(Error::Simple)\\|perl(Error::subs)\\|perl(TestInterface)\\|perl(TestObject)
@@ -19,6 +19,7 @@ Requires:	perl-Class-MakeMethods
 %if %{mdkversion} < 1010
 BuildRequires:	perl-devel
 %endif
+BuildRequires:	perl(Module::Build)
 BuildRequires:	perl(Clone)
 BuildRequires:	perl(Class::AutoClass)
 BuildRequires:	perl(CPAN) >= 1.9205
