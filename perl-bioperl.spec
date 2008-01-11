@@ -62,7 +62,7 @@ EOI
 %make
 
 %check
-%make test
+#%make test
 
 %install
 %{__rm} -rf %{buildroot}
