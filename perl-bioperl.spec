@@ -1,7 +1,7 @@
 %define module	bioperl
 %define name	perl-%{module}
 %define version 1.5.2_102
-%define release %mkrel 3
+%define release %mkrel 1
 
 %define _requires_exceptions perl(Bio::Expression::FeatureSet)\\|perl(TestInterface)
 %define _provides_exceptions perl(Error)\\|perl(Error::Simple)\\|perl(Error::subs)\\|perl(TestInterface)\\|perl(TestObject)
@@ -54,8 +54,11 @@ research.
 #rm -f t/DB.t
 
 %build
-#%{__perl} -I/usr/lib/perl5/vendor_perl/5.8.8/ Makefile.PL INSTALLDIRS=vendor  </dev/null
-%{__perl} Makefile.PL INSTALLDIRS=vendor  </dev/null
+%{__perl} Makefile.PL INSTALLDIRS=vendor <<EOI &>/dev/null
+n
+a
+n
+EOI
 %make
 
 %check
