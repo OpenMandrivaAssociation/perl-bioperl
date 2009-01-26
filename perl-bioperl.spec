@@ -1,6 +1,6 @@
 %define module	bioperl
 %define name	perl-%{module}
-%define version 1.5.9
+%define version 1.6.0
 %define release %mkrel 1
 
 %define _requires_exceptions perl(Bio::Expression::FeatureSet)\\|perl(TestInterface)
@@ -13,8 +13,8 @@ Summary:	BioPerl core modules
 Group:		Development/Perl
 License:	Artistic
 URL:		http://www.bioperl.org
-Source:		http://bioperl.org/DIST/BioPerl-%{version}_1.tar.bz2
-Patch:		%{module}-1.5.0.makefile.patch
+Source:		http://bioperl.org/DIST/BioPerl-%{version}.tar.bz2
+
 Requires:	perl-Class-MakeMethods
 %if %{mdkversion} < 1010
 BuildRequires:	perl-devel
@@ -47,11 +47,7 @@ of open source Perl tools for bioinformatics, genomics and life science
 research.
 
 %prep
-%setup -q -n %{module}-%{version}._1
-#%patch
-#rm -f t/FeatureIO.t
-#rm -f t/SeqFeatCollection.t
-#rm -f t/DB.t
+%setup -q -n BioPerl-%{version}
 
 %build
 %{__perl} Makefile.PL INSTALLDIRS=vendor <<EOI &>/dev/null
@@ -95,5 +91,3 @@ done
 #%{perl_vendorlib}/*.pl
 #%{perl_vendorlib}/*.pod
 %{_mandir}/*/*
-
-
