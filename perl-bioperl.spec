@@ -1,7 +1,7 @@
 %define module	bioperl
 %define name	perl-%{module}
 %define version 1.6.0
-%define release %mkrel 1
+%define release %mkrel 2
 
 %define _requires_exceptions perl(Bio::Expression::FeatureSet)\\|perl(TestInterface)
 %define _provides_exceptions perl(Error)\\|perl(Error::Simple)\\|perl(Error::subs)\\|perl(TestInterface)\\|perl(TestObject)
@@ -15,7 +15,6 @@ License:	Artistic
 URL:		http://www.bioperl.org
 Source:		http://bioperl.org/DIST/BioPerl-%{version}.tar.bz2
 
-Requires:	perl-Class-MakeMethods
 %if %{mdkversion} < 1010
 BuildRequires:	perl-devel
 %endif
@@ -23,17 +22,21 @@ BuildRequires:	perl(Module::Build)
 BuildRequires:	perl(Clone)
 BuildRequires:	perl(Class::AutoClass)
 BuildRequires:	perl(CPAN) >= 1.9205
-BuildRequires:  perl(Data::Stag::Writer)
-BuildRequires:	perl(GD)
-#BuildRequires:	perl(GD::SVG)
-BuildRequires:	perl(IO::String)
-BuildRequires:	perl(SVG::Graph)
-BuildRequires:	perl(Text::Shellwords)
-BuildRequires:	perl(Tree::DAG_Node)
-BuildRequires:	perl(XML::DOM::XPath)
-BuildRequires:	perl(XML::SAX::Writer)
-BuildRequires:  perl(XML::Twig)
-BuildRequires:	perl(XML::Writer)
+
+#Requires:	perl(Algorithm::Munkres)
+#Requires:	perl(Class::MakeMethod)
+#Requires:	perl(Data::Stag::Writer)
+Requires:	perl(GD)
+#Requires:	perl(GD::SVG)
+#Requires:	perl(IO::String)
+#Requires:	perl(SVG::Graph)
+Requires:	perl(SOAP::Lite)
+Requires:	perl(Text::Shellwords)
+#Requires:	perl(Tree::DAG_Node)
+#Requires:	perl(XML::DOM::XPath)
+#Requires:	perl(XML::SAX::Writer)
+#Requires:	perl(XML::Twig)
+#Requires:	perl(XML::Writer)
 
 Obsoletes:	perl-Bioperl
 Provides:	perl-Bioperl
@@ -72,11 +75,12 @@ find %{buildroot}%{perl_vendorlib}/Bio/ -name "*.pm" -exec chmod 644 {} \;
 
 # clean doc
 executables='.*\(\.\(pl\|cgi\)\|pdf2index\|dbfetch\)$'
-for dir in examples doc; do
-    find $dir -type f -regex $executables | xargs chmod 644
-    find $dir -type f -regex $executables | xargs perl -pi -e 's|^#!/usr/local/bin/perl|#!/usr/bin/perl|'
-    find $dir -type f ! -regex $executables | xargs chmod 644
-    find $dir -type f | xargs perl -pi -e 'BEGIN {exit unless -T $ARGV[0];} tr/\r//d;'
+for dir in examples doc;
+do
+	find $dir -type f -regex $executables | xargs chmod 644
+	find $dir -type f -regex $executables | xargs perl -pi -e 's|^#!/usr/local/bin/perl|#!/usr/bin/perl|'
+	find $dir -type f ! -regex $executables | xargs chmod 644
+	find $dir -type f | xargs perl -pi -e 'BEGIN {exit unless -T $ARGV[0];} tr/\r//d;'
 done
 
 %clean
