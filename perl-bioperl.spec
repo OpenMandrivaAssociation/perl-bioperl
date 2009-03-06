@@ -53,7 +53,7 @@ research.
 %setup -q -n BioPerl-%{version}
 
 %build
-%{__perl} Makefile.PL INSTALLDIRS=vendor <<EOI &>/dev/null
+%{__perl} Makefile.PL INSTALLDIRS=vendor <<EOI
 n
 n
 a
