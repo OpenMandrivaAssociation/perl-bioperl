@@ -20,10 +20,10 @@ BuildRequires:	perl-devel
 %endif
 BuildRequires:	perl(Module::Build)
 BuildRequires:	perl(Clone)
-BuildRequires:	perl(Class::AutoClass)
 BuildRequires:	perl(CPAN) >= 1.9205
 
 #Requires:	perl(Algorithm::Munkres)
+Requires:	perl(Class::AutoClass) >= 1.01
 #Requires:	perl(Class::MakeMethod)
 #Requires:	perl(Data::Stag::Writer)
 Requires:	perl(GD)
