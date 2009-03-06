@@ -55,6 +55,7 @@ research.
 %build
 %{__perl} Makefile.PL INSTALLDIRS=vendor <<EOI &>/dev/null
 n
+n
 a
 n
 EOI
