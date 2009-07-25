@@ -18,9 +18,12 @@ Source0:	http://bioperl.org/DIST/%{upstream_name}-%{upstream_version}.tar.bz2
 %if %{mdkversion} < 1010
 BuildRequires:	perl-devel
 %endif
+BuildRequires:	perl(DB_File)
+BuildRequires:	perl(Clone)
+BuildRequires:	perl(Data::Stag)
 BuildRequires:	perl(IO::String)
 BuildRequires:	perl(Module::Build)
-BuildRequires:	perl(Clone)
+BuildRequires:	perl(Scalar::Util)
 BuildRequires:	perl(CPAN) >= 1.9205
 BuildArch:	noarch
 BuildRoot:	%{_tmppath}/%{name}-%{version}
