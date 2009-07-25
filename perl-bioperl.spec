@@ -1,19 +1,19 @@
-%define module	bioperl
-%define name	perl-%{module}
-%define version 1.6.0
-%define release %mkrel 2
+%define upstream_name    BioPerl
+%define rpm_name         perl-bioperl
+%define upstream_version 1.6.0
 
 %define _requires_exceptions perl(Bio::Expression::FeatureSet)\\|perl(TestInterface)
 %define _provides_exceptions perl(Error)\\|perl(Error::Simple)\\|perl(Error::subs)\\|perl(TestInterface)\\|perl(TestObject)
 
-Name:		%{name}
-Version:	%{version}
-Release:	%{release}
+Name:		%{rpm_name}
+Version:	%perl_convert_version %{upstream_version}
+Release:	%mkrel 2
+
 Summary:	BioPerl core modules
 Group:		Development/Perl
 License:	Artistic
 URL:		http://www.bioperl.org
-Source:		http://bioperl.org/DIST/BioPerl-%{version}.tar.bz2
+Source0:	http://bioperl.org/DIST/%{upstream_name}-%{upstream_version}.tar.bz2
 
 %if %{mdkversion} < 1010
 BuildRequires:	perl-devel
@@ -21,6 +21,10 @@ BuildRequires:	perl-devel
 BuildRequires:	perl(Module::Build)
 BuildRequires:	perl(Clone)
 BuildRequires:	perl(CPAN) >= 1.9205
+BuildArch:	noarch
+BuildRoot:	%{_tmppath}/%{name}-%{version}
+Obsoletes:	perl-Bioperl
+Provides:	perl-Bioperl
 
 #Requires:	perl(Algorithm::Munkres)
 Requires:	perl(Class::AutoClass) >= 1.01
@@ -38,11 +42,6 @@ Requires:	perl(Text::Shellwords)
 #Requires:	perl(XML::Twig)
 #Requires:	perl(XML::Writer)
 
-Obsoletes:	perl-Bioperl
-Provides:	perl-Bioperl
-BuildArch:	noarch
-BuildRoot:	%{_tmppath}/%{name}-%{version}
-
 %description
 Officially organized in 1995 and existing informally for several years
 prior, The Bioperl Project is an international association of developers
@@ -50,7 +49,7 @@ of open source Perl tools for bioinformatics, genomics and life science
 research.
 
 %prep
-%setup -q -n BioPerl-%{version}
+%setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
 %{__perl} Makefile.PL INSTALLDIRS=vendor <<EOI
@@ -91,7 +90,6 @@ done
 %defattr(-,root,root)
 %doc examples models
 %doc AUTHORS BUGS Changes DEPENDENCIES DEPRECATED INSTALL LICENSE PLATFORMS README
-%{_bindir}/*
 %{perl_vendorlib}/Bio/
 #%{perl_vendorlib}/*.pl
 #%{perl_vendorlib}/*.pod
