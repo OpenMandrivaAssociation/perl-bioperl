@@ -22,6 +22,7 @@ BuildRequires:	perl(DB_File)
 BuildRequires:	perl(Clone)
 BuildRequires:	perl(Data::Stag)
 BuildRequires:	perl(IO::String)
+BuildRequires:	perl(LWP::UserAgent)
 BuildRequires:	perl(Module::Build)
 BuildRequires:	perl(Scalar::Util)
 BuildRequires:	perl(CPAN) >= 1.9205
