@@ -1,19 +1,19 @@
 %define upstream_name    BioPerl
 %define rpm_name         perl-bioperl
-%define upstream_version 1.6.0
+%define upstream_version 1.6.1
 
 %define _requires_exceptions perl(Bio::Expression::FeatureSet)\\|perl(TestInterface)
 %define _provides_exceptions perl(Error)\\|perl(Error::Simple)\\|perl(Error::subs)\\|perl(TestInterface)\\|perl(TestObject)
 
 Name:		%{rpm_name}
 Version:	%perl_convert_version %{upstream_version}
-Release:	%mkrel 2
+Release:	%mkrel 1
 
 Summary:	BioPerl core modules
 Group:		Development/Perl
 License:	Artistic
 URL:		http://www.bioperl.org
-Source0:	http://bioperl.org/DIST/%{upstream_name}-%{upstream_version}.tar.bz2
+Source0:	http://bioperl.org/DIST/%{upstream_name}-%{upstream_version}.tar.gz
 
 %if %{mdkversion} < 1010
 BuildRequires:	perl-devel
@@ -94,7 +94,7 @@ done
 %files
 %defattr(-,root,root)
 %doc examples models
-%doc AUTHORS BUGS Changes DEPENDENCIES DEPRECATED INSTALL LICENSE PLATFORMS README
+%doc AUTHORS BUGS Changes DEPENDENCIES DEPRECATED INSTALL LICENSE README
 %{perl_vendorlib}/Bio/
 #%{perl_vendorlib}/*.pl
 #%{perl_vendorlib}/*.pod
