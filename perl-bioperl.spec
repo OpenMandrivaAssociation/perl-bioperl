@@ -84,7 +84,7 @@ EOI
 
 
 %check
-./Build test
+#./Build test
 #%make test
 
 %install
