@@ -8,7 +8,7 @@
 Name:		%{rpm_name}
 # Version:	%perl_convert_version %{upstream_version}
 Version:	%{upstream_version}
-Release:	%mkrel 1
+Release:	%mkrel 2
 
 Summary:	BioPerl core modules
 Group:		Development/Perl
