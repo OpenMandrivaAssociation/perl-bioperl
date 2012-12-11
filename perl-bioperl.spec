@@ -1,24 +1,24 @@
 %define upstream_name    BioPerl
-%define rpm_name         perl-bioperl
 %define upstream_version 1.6.901
 
+%if %{_use_internal_dependency_generator}
+%define __noautoreq 'perl\\(Bio::Expression::(.*)\\)|perl\\(Bio::Phylo::(.*)\\)|perl\\(Mac::(.*)\\)|perl\\(Win32::Clipboard\\)|perl\\(Bio::Tools::Run::Samtools\\)|perl\\(TestInterface\\)'
+%define __noautoprov 'perl\\(Error\\)|perl\\(Error::Simple\\)|perl\\(Error::subs\\)|perl\\(TestInterface\\)|perl\\(TestObject\\)'
+%else
 %define _requires_exceptions perl(Bio::Expression::FeatureSet)\\|perl(TestInterface)
 %define _provides_exceptions perl(Error)\\|perl(Error::Simple)\\|perl(Error::subs)\\|perl(TestInterface)\\|perl(TestObject)
+%endif
 
-Name:		%{rpm_name}
-# Version:	%perl_convert_version %{upstream_version}
+Name:		perl-bioperl
 Version:	%{upstream_version}
-Release:	%mkrel 2
-
+Release:	6
 Summary:	BioPerl core modules
 Group:		Development/Perl
 License:	Artistic
 URL:		http://www.bioperl.org
 Source0:	http://bioperl.org/DIST/%{upstream_name}-%{upstream_version}.tar.gz
 
-#if %{mdkversion} < 1010
-#BuildRequires:	perl-devel
-#endif
+BuildRequires:	perl-devel
 BuildRequires:	perl(Algorithm::Munkres)
 BuildRequires:	perl(Array::Compare)
 BuildRequires:	perl(Clone)
@@ -42,25 +42,7 @@ BuildRequires:	perl(XML::Simple)
 BuildRequires:	perl(XML::Writer)
 
 BuildArch:	noarch
-BuildRoot:	%{_tmppath}/%{name}-%{version}
-Obsoletes:	perl-Bioperl
-Provides:	perl-Bioperl
-
-
-Requires:	perl(Class::AutoClass) >= 1.01
-#Requires:	perl(Class::MakeMethod)
-#Requires:	perl(Data::Stag::Writer)
-Requires:	perl(GD)
-#Requires:	perl(GD::SVG)
-#Requires:	perl(IO::String)
-#Requires:	perl(SVG::Graph)
-Requires:	perl(SOAP::Lite)
-Requires:	perl(Text::Shellwords)
-#Requires:	perl(Tree::DAG_Node)
-#Requires:	perl(XML::DOM::XPath)
-#Requires:	perl(XML::SAX::Writer)
-#Requires:	perl(XML::Twig)
-#Requires:	perl(XML::Writer)
+%rename perl-Bioperl
 
 %description
 Officially organized in 1995 and existing informally for several years
@@ -77,7 +59,7 @@ research.
 # Do you want to run tests that require connection to servers across the internet
 # (likely to cause some failures)? y/n [n] n
 
-%{__perl} Build.PL --installdirs vendor --destdir %buildroot  <<EOI
+perl Build.PL --installdirs vendor --destdir %{buildroot}  <<EOI
 a
 n
 EOI
@@ -88,12 +70,11 @@ EOI
 #%make test
 
 %install
-%{__rm} -rf %{buildroot}
 ./Build install
 #makeinstall_std
 # those should belong to Bioperl-Run instead
-%{__rm} -f %{buildroot}%{_bindir}/bp_pairwise_kaks.pl
-%{__rm} -f %{buildroot}%{_bindir}/bp_blast2tree.pl
+rm -f %{buildroot}%{_bindir}/bp_pairwise_kaks.pl
+rm -f %{buildroot}%{_bindir}/bp_blast2tree.pl
 
 # correct permissions
 find %{buildroot}%{perl_vendorlib}/Bio/ -name "*.pm" -exec chmod 644 {} \;
@@ -162,15 +143,123 @@ Some environment variables include:
 +------------------------------------------------------------------------+
 EOD
 
-%clean
-%{__rm} -rf %{buildroot}
-
 %files
-%defattr(-,root,root)
 %doc examples models
 %doc AUTHORS BUGS Changes DEPENDENCIES DEPRECATED INSTALL LICENSE README README.urpmi
-%_bindir/*
+%{_bindir}/*
 %{perl_vendorlib}/Bio/
-#{perl_vendorlib}/*.pl
-#{perl_vendorlib}/*.pod
 %{_mandir}/*/*
+
+
+%changelog
+* Tue Jan 24 2012 StÃ©phane TÃ©letchÃ©a <steletch@mandriva.org> 1.6.901-2mdv2012.0
++ Revision: 768075
+- Rebuild for new perl
+
+* Tue Sep 20 2011 StÃ©phane TÃ©letchÃ©a <steletch@mandriva.org> 1.6.901-1
++ Revision: 700499
+- Skip tests since some require a valid internet connection
+- Update to 1.6.901
+- Drop pre-10.1 support
+- update BR for a more complete bioperl experience
+- indicate to what corresponds default building choices
+- copy the default bash variables for databases
+- add bioperl scripts
+
+* Wed Sep 30 2009 JÃ©rÃ´me Quelin <jquelin@mandriva.org> 1.6.1-1mdv2010.0
++ Revision: 451789
+- update to 1.6.1
+
+* Sat Jul 25 2009 JÃ©rÃ´me Quelin <jquelin@mandriva.org> 1.6.0-2mdv2010.0
++ Revision: 399778
+- adding missing buildrequires:
+- adding missing buildrequires:
+- adding missing buildrequires:
+- fixed spec file to build correctly
+- using %%perl_convert_version
+
+  + StÃ©phane TÃ©letchÃ©a <steletch@mandriva.org>
+    - Add missing interactive answer
+    - Added versioned dependency on autoclass
+    - Corrected dependencies
+    - Added perl-Algorithm-Munkres requirement
+
+* Mon Jan 26 2009 StÃ©phane TÃ©letchÃ©a <steletch@mandriva.org> 1.6.0-1mdv2009.1
++ Revision: 333774
+- Update to 1.6.0 final
+- Removed unused patch
+
+* Tue Dec 30 2008 Guillaume Rousse <guillomovitch@mandriva.org> 1.5.9-1mdv2009.1
++ Revision: 321400
+- new version
+
+* Wed Jul 30 2008 Thierry Vignaud <tv@mandriva.org> 1.5.2_102-3mdv2009.0
++ Revision: 255439
+- rebuild
+
+* Fri Jan 11 2008 StÃ©phane TÃ©letchÃ©a <steletch@mandriva.org> 1.5.2_102-1mdv2008.1
++ Revision: 148695
+- Disable tests due to stange failure in bs
+- CPAN should not be triggered now since we have all necessary dependencies
+- added basic default options for scripts and extra plugins
+- Add BuildRequires for iurt
+- Add a stronger dependency on CPAN version
+- Update to 1.5.2_102
+- Added some dependencies (perl-GD-SVG still missing)
+- Tests enabled since the new perl @INC search order allows to get the latest modules first
+- Fix some permissions in doc
+- Correct included files in docdir
+
+  + Olivier Blin <blino@mandriva.org>
+    - restore BuildRoot
+
+  + Thierry Vignaud <tv@mandriva.org>
+    - kill re-definition of %%buildroot on Pixel's request
+
+
+* Tue Mar 13 2007 Pixel <pixel@mandriva.com> 1.5.1-5mdv2007.1
++ Revision: 142178
+- quick and dirty workaround of rpm find-provides and find-requires looking
+  for things even in /usr/share/doc/.../examples/...
+- hack: disabling "make test" so that build works
+
+  + Guillaume Rousse <guillomovitch@mandriva.org>
+    - Import perl-bioperl
+
+* Fri May 05 2006 Guillaume Rousse <guillomovitch@mandriva.org> 1.5.1-4mdk
+- better buildrequires syntax 
+- more buildrequires
+
+* Fri Mar 24 2006 Guillaume Rousse <guillomovitch@mandriva.org> 1.5.1-3mdk
+- buildrequires
+
+* Mon Mar 20 2006 Guillaume Rousse <guillomovitch@mandriva.org> 1.5.1-2mdk
+- fix dependencies
+
+* Wed Jan 11 2006 Guillaume Rousse <guillomovitch@mandriva.org> 1.5.1-1mdk
+- new version
+- fixed doc files perms, encoding and shellbang
+- don't install scripts in documentation, they are already installed in /usr/bin
+
+* Tue Jan 03 2006 Nicolas Lécureuil <neoclust@mandriva.org> 1.5.0-4mdk
+- Add BuildRequires
+
+* Tue Dec 27 2005 Guillaume Rousse <guillomovitch@mandriva.org> 1.5.0-3mdk
+- corrected name
+- %%mkrel
+- enable test, except failing one
+
+* Tue Jun 07 2005 Nicolas Lécureuil <neoclust@mandriva.org> 1.5.0-2mdk
+- rebuild for new Perl
+
+* Thu Jan 27 2005 Guillaume Rousse <guillomovitch@mandrake.org> 1.5.0-1mdk 
+- new version
+- generate man pages
+- spec cleanup
+
+* Mon Dec 20 2004 Guillaume Rousse <guillomovitch@mandrake.org> 1.4-4mdk
+- fix buildrequires in a backward compatible way
+
+* Thu Jul 22 2004 Guillaume Rousse <guillomovitch@mandrake.org> 1.4-3mdk 
+- rpmbuildupdate aware
+
