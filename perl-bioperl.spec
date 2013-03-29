@@ -1,4 +1,4 @@
-%define upstream_name    BioPerl
+%define upstream_name BioPerl
 %define upstream_version 1.6.901
 
 %if %{_use_internal_dependency_generator}
@@ -11,7 +11,7 @@
 
 Name:		perl-bioperl
 Version:	%{upstream_version}
-Release:	6
+Release:	7
 Summary:	BioPerl core modules
 Group:		Development/Perl
 License:	Artistic
@@ -42,7 +42,7 @@ BuildRequires:	perl(XML::Simple)
 BuildRequires:	perl(XML::Writer)
 
 BuildArch:	noarch
-%rename perl-Bioperl
+%rename	perl-Bioperl
 
 %description
 Officially organized in 1995 and existing informally for several years
