@@ -1,5 +1,5 @@
 %define upstream_name BioPerl
-%define upstream_version 1.6.901
+%define upstream_version 110
 
 %if %{_use_internal_dependency_generator}
 %define __noautoreq 'perl\\(Bio::Expression::(.*)\\)|perl\\(Bio::Phylo::(.*)\\)|perl\\(Mac::(.*)\\)|perl\\(Win32::Clipboard\\)|perl\\(Bio::Tools::Run::Samtools\\)|perl\\(TestInterface\\)'
@@ -10,13 +10,13 @@
 %endif
 
 Name:		perl-bioperl
-Version:	%{upstream_version}
-Release:	7
+Version:	%perl_convert_version 110
+Release:	1
 Summary:	BioPerl core modules
 Group:		Development/Perl
 License:	Artistic
 URL:		http://www.bioperl.org
-Source0:	http://bioperl.org/DIST/%{upstream_name}-%{upstream_version}.tar.gz
+Source0:	http://bioperl.org/DIST/old_releases/bioperl-110.zip
 
 BuildRequires:	perl-devel
 BuildRequires:	perl(Algorithm::Munkres)
@@ -262,4 +262,5 @@ EOD
 
 * Thu Jul 22 2004 Guillaume Rousse <guillomovitch@mandrake.org> 1.4-3mdk 
 - rpmbuildupdate aware
+
 
