@@ -10,13 +10,13 @@
 %endif
 
 Name:		perl-bioperl
-Version:	%perl_convert_version 110
+Version:	%perl_convert_version %{upstream_version}
 Release:	1
 Summary:	BioPerl core modules
 Group:		Development/Perl
 License:	Artistic
 URL:		http://www.bioperl.org
-Source0:	http://bioperl.org/DIST/old_releases/bioperl-110.zip
+Source0:	http://bioperl.org/DIST/old_releases/bioperl-%{upstream_version}.zip
 
 BuildRequires:	perl-devel
 BuildRequires:	perl(Algorithm::Munkres)
