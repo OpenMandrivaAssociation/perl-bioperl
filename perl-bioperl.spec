@@ -11,7 +11,7 @@
 
 Name:		perl-bioperl
 Version:	%{upstream_version}
-Release:	8
+Release:	9
 Summary:	BioPerl core modules
 Group:		Development/Perl
 License:	Artistic
