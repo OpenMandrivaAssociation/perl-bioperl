@@ -15,7 +15,7 @@ Release:	9
 Summary:	BioPerl core modules
 Group:		Development/Perl
 License:	Artistic
-URL:		http://www.bioperl.org
+URL:		https://www.bioperl.org
 Source0:	http://bioperl.org/DIST/%{upstream_name}-%{upstream_version}.tar.gz
 
 BuildRequires:	perl-devel
